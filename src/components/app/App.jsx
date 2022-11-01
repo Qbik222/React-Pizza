@@ -19,20 +19,7 @@ function App() {
           <h2 className='content__title'>Все пиццы</h2>
           <div className='content__items'>
             {pizzas.map((obj) => {
-              const { id, imageUrl, title, types, sizes, price, category, raiting } = obj;
-
-              return (
-                <PizzaBlock
-                  id={id}
-                  imageUrl={imageUrl}
-                  title={title}
-                  types={types}
-                  sizes={sizes}
-                  price={price}
-                  category={category}
-                  raiting={raiting}
-                />
-              );
+              return <PizzaBlock {...obj} />;
             })}
           </div>
         </div>

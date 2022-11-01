@@ -1,30 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './pizza-block.scss';
 
 function PizzaBlock(props) {
-  // const [num, setOfNum] = useState(0);
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(null);
 
-  // const calcNum = () => {
-  //   setOfNum((num) => num + 1);
-  // };
-
-  // console.log(pizzas.map((item) => console.log(item)));
-
-  const { id, imageUrl, title, sizes, price } = props;
-
+  const { id, imageUrl, title, sizes, price, types } = props;
+  const typesNames = ['тонкое', 'традиционное'];
   return (
     <div className='pizza-block' key={id}>
       <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>
         <ul>
-          <li className='active'>тонкое</li>
-          <li>традиционное</li>
+          {types.map((item, i) => {
+            return (
+              <li
+                className={activeType === i ? 'active' : null}
+                key={i}
+                onClick={() => setActiveType(i)}>
+                {typesNames[item]}
+              </li>
+            );
+          })}
         </ul>
         <ul>
-          {sizes.map((item) => {
-            return <li key={id}>{item}</li>;
+          {sizes.map((item, i) => {
+            return (
+              <li
+                className={activeSize === i ? 'active' : null}
+                key={i}
+                onClick={() => setActiveSize(i)}>
+                {item} см.
+              </li>
+            );
           })}
         </ul>
       </div>

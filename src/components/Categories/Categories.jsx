@@ -3,15 +3,7 @@ import './categories.scss';
 
 function Categories() {
   let [activeIndex, setActiveIndex] = useState(0);
-  const categoties = [
-    'Все',
-    'Мясные',
-    'Вегетарианская',
-    'Вегетарианская',
-    'Гриль',
-    'Острые',
-    'Закрытые',
-  ];
+  const categoties = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   const changeCategory = (i) => {
     setActiveIndex(i);
@@ -22,7 +14,10 @@ function Categories() {
       <ul>
         {categoties.map((value, i) => {
           return (
-            <li onClick={() => changeCategory(i)} className={activeIndex === i ? 'active' : ''}>
+            <li
+              key={value}
+              onClick={() => changeCategory(i)}
+              className={activeIndex === i ? 'active' : ''}>
               {value}
             </li>
           );

@@ -6,10 +6,10 @@ function PizzaBlock(props) {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(null);
 
-  const { id, imageUrl, title, sizes, price, types } = props;
+  const { imageUrl, title, sizes, price, types } = props;
   const typesNames = ['тонкое', 'традиционное'];
   return (
-    <div className='pizza-block' key={id}>
+    <div className='pizza-block'>
       <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
       <h4 className='pizza-block__title'>{title}</h4>
       <div className='pizza-block__selector'>

@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import './sort.scss';
 
-function Sort() {
+function Sort({ value, changeSort }) {
   const [isVisible, setIsVisible] = useState(false);
-  const [VisibleCategories, setVisibleCategories] = useState(0);
-  const categories = ['популярности', 'цене', 'алфавиту'];
-  const sortName = categories[VisibleCategories];
+  const categories = [
+    { name: 'популярности(desc)', id: 'rating' },
+    { name: 'популярности(asc)', id: '-rating' },
+    { name: 'цене (desc)', id: 'price' },
+    { name: 'цене(asc)', id: '-price' },
+    { name: 'алфавиту (desc)', id: 'title' },
+    { name: 'алфавиту(asc)', id: '-title' },
+  ];
+  const sortName = value.name;
+
   const VisiblePopup = (i) => {
-    setVisibleCategories(i);
+    changeSort(i);
     setIsVisible(false);
   };
-
   return (
     <div className='sort'>
       <div className='sort__label'>
@@ -35,9 +41,10 @@ function Sort() {
             {categories.map((item, i) => {
               return (
                 <li
-                  onClick={() => VisiblePopup(i)}
-                  className={VisibleCategories === i ? 'active' : null}>
-                  {item}
+                  onClick={() => VisiblePopup(item)}
+                  key={i}
+                  className={value.id === item.id ? 'active' : null}>
+                  {item.name}
                 </li>
               );
             })}

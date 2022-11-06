@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import './sort.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeSort } from '../../redux/slices/filterSlice';
 
-function Sort({ value, changeSort }) {
+function Sort() {
   const [isVisible, setIsVisible] = useState(false);
+
+  const sort = useSelector((state) => state.filter.sort);
+  const dispatch = useDispatch();
+
   const categories = [
     { name: 'популярности(desc)', id: 'rating' },
     { name: 'популярности(asc)', id: '-rating' },
@@ -11,10 +17,10 @@ function Sort({ value, changeSort }) {
     { name: 'алфавиту (desc)', id: 'title' },
     { name: 'алфавиту(asc)', id: '-title' },
   ];
-  const sortName = value.name;
+  const sortName = sort.name;
 
   const VisiblePopup = (i) => {
-    changeSort(i);
+    dispatch(changeSort(i));
     setIsVisible(false);
   };
   return (
@@ -43,7 +49,7 @@ function Sort({ value, changeSort }) {
                 <li
                   onClick={() => VisiblePopup(item)}
                   key={i}
-                  className={value.id === item.id ? 'active' : null}>
+                  className={sort.id === item.id ? 'active' : null}>
                   {item.name}
                 </li>
               );

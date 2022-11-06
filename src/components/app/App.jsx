@@ -9,12 +9,14 @@ import NotFound from '../../pages/Not-found';
 import './app.scss';
 
 function App() {
+  const [inputValue, setInputValue] = React.useState('');
+
   return (
     <div className='wrapper'>
-      <Header />
+      <Header inputValue={inputValue} setInputValue={setInputValue} />
       <div className='content'>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/React-Pizza' element={<Home inputValue={inputValue} />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

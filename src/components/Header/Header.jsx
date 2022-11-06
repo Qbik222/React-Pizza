@@ -1,13 +1,16 @@
 import React from 'react';
+
 import './header.scss';
+
+import Search from '../Search';
 import logoSvg from '../../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom';
 
-function Header() {
+function Header({ inputValue, setInputValue }) {
   return (
     <div className='header'>
       <div className='container'>
-        <Link to={'/'}>
+        <Link to={'/React-Pizza'}>
           <div className='header__logo'>
             <img width='38' src={logoSvg} alt='Pizza logo' />
             <div>
@@ -16,6 +19,12 @@ function Header() {
             </div>
           </div>
         </Link>
+        <Search
+          inputValue={inputValue}
+          setInputValue={(i) => {
+            setInputValue(i);
+          }}
+        />
         <Link to={'/cart'}>
           <div className='header__cart'>
             <a href='/cart.html' className='button button--cart'>

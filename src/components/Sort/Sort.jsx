@@ -3,20 +3,21 @@ import './sort.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeSort } from '../../redux/slices/filterSlice';
 
+export const sortList = [
+  { name: 'популярности(desc)', id: 'rating' },
+  { name: 'популярности(asc)', id: '-rating' },
+  { name: 'цене (desc)', id: 'price' },
+  { name: 'цене(asc)', id: '-price' },
+  { name: 'алфавиту (desc)', id: 'title' },
+  { name: 'алфавиту(asc)', id: '-title' },
+];
+
 function Sort() {
   const [isVisible, setIsVisible] = useState(false);
 
   const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
 
-  const categories = [
-    { name: 'популярности(desc)', id: 'rating' },
-    { name: 'популярности(asc)', id: '-rating' },
-    { name: 'цене (desc)', id: 'price' },
-    { name: 'цене(asc)', id: '-price' },
-    { name: 'алфавиту (desc)', id: 'title' },
-    { name: 'алфавиту(asc)', id: '-title' },
-  ];
   const sortName = sort.name;
 
   const VisiblePopup = (i) => {
@@ -44,7 +45,7 @@ function Sort() {
       {isVisible && (
         <div className='sort__popup'>
           <ul>
-            {categories.map((item, i) => {
+            {sortList.map((item, i) => {
               return (
                 <li
                   onClick={() => VisiblePopup(item)}

@@ -17,15 +17,27 @@ function Sort() {
 
   const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
+  const sortRef = React.useRef();
 
   const sortName = sort.name;
+
+  React.useEffect(() => {
+    const onClosePopup = (e) => {
+      if (!e.composedPath().includes(sortRef.current)) {
+        setIsVisible(false);
+      }
+    };
+
+    document.body.addEventListener('click', onClosePopup);
+    return () => document.body.removeEventListener('click', onClosePopup);
+  }, []);
 
   const VisiblePopup = (i) => {
     dispatch(changeSort(i));
     setIsVisible(false);
   };
   return (
-    <div className='sort'>
+    <div ref={sortRef} className='sort'>
       <div className='sort__label'>
         <svg
           width='10'

@@ -3,7 +3,7 @@ import debounce from 'lodash.debounce';
 
 import styles from './search.module.scss';
 
-const Search = ({ inputValue, setInputValue }) => {
+const Search = ({ setInputValue }) => {
   const [value, setValue] = React.useState('');
   const inputRef = React.useRef();
 

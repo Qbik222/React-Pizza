@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const filterSlice = createSlice({
-  name: 'filter',
+  name: 'cart',
   initialState,
   reducers: {
     setCategories(state, action) {

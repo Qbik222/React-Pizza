@@ -57,20 +57,33 @@ const cartSlice = createSlice({
       state.totalPrice = 0;
     },
     removeItem(state, action) {
-      const newItem = state.items.find(
-        (obj) =>
-          obj.id === action.payload.id &&
-          obj.type === action.payload.type &&
-          obj.size === action.payload.size,
+      const newArr = state.items.filter(
+        (item) =>
+          (item.size !== action.payload.size &&
+            item.id !== action.payload.id &&
+            item.type !== action.payload.type) ||
+          (item.size !== action.payload.size &&
+            item.id !== action.payload.id &&
+            item.type === action.payload.type) ||
+          (item.size !== action.payload.size &&
+            item.id === action.payload.id &&
+            item.type === action.payload.type) ||
+          (item.size === action.payload.size &&
+            item.id !== action.payload.id &&
+            item.type === action.payload.type) ||
+          (item.size === action.payload.size &&
+            item.id !== action.payload.id &&
+            item.type !== action.payload.type) ||
+          (item.size === action.payload.size &&
+            item.id === action.payload.id &&
+            item.type !== action.payload.type) ||
+          (item.size !== action.payload.size &&
+            item.id === action.payload.id &&
+            item.type !== action.payload.type),
       );
-      if (newItem) {
-        state.items = state.items.filter(
-          (obj) =>
-            obj.id === action.payload.id &&
-            obj.type !== action.payload.type &&
-            obj.size !== action.payload.size,
-        );
-      }
+
+      state.items = [...newArr];
+
       state.totalPrice = state.items.reduce((num, obj) => {
         return obj.price * obj.count + num;
       }, 0);

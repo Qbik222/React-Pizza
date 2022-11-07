@@ -16,7 +16,7 @@ function App() {
       <Header inputValue={inputValue} setInputValue={setInputValue} />
       <div className='content'>
         <Routes>
-          <Route path='/React-Pizza' element={<Home inputValue={inputValue} />} />
+          <Route path='/React-Pizza/' element={<Home inputValue={inputValue} />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='*' element={<NotFound />} />
         </Routes>

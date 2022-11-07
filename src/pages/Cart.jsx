@@ -101,7 +101,7 @@ const Cart = () => {
             </span>
           </div>
           <div className='cart__bottom-buttons'>
-            <Link to='/React-Pizza' className='button button--outline button--add go-back-btn'>
+            <Link to='/React-Pizza/' className='button button--outline button--add go-back-btn'>
               <svg width='8' height='14' viewBox='0 0 8 14' fill='none'>
                 <path
                   d='M7 13L1 6.93015L6.86175 1'

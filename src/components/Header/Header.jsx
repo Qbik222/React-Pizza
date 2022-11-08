@@ -11,7 +11,11 @@ import { Link } from 'react-router-dom';
 
 function Header({ inputValue, setInputValue }) {
   const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const countPizzas = useSelector((state) => state.cart.items.length);
+  const pizzas = useSelector((state) => state.cart.items);
+
+  const currentCount =
+    pizzas.length > 0 ? pizzas.map((item) => item.count).reduce((prev, next) => prev + next) : 0;
+
   return (
     <div className='header'>
       <div className='container'>
@@ -30,6 +34,7 @@ function Header({ inputValue, setInputValue }) {
             setInputValue(i);
           }}
         />
+
         <Link to={'/cart'}>
           <div className='header__cart'>
             <a href='/cart.html' className='button button--cart'>
@@ -58,7 +63,7 @@ function Header({ inputValue, setInputValue }) {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>{countPizzas}</span>
+              <span>{currentCount}</span>
             </a>
           </div>
         </Link>

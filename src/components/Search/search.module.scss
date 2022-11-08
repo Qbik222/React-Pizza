@@ -1,6 +1,40 @@
 .root {
-  position: relative;
-  right: 150px;
+  position: absolute;
+  left: 50vw;
+  @media (max-width: 1150px) {
+    left: 47vw;
+    .input {
+      width: 25vw;
+      height: 30px;
+      font-size: 14px;
+    }
+    .search {
+      width: 18px;
+    }
+    .close {
+      width: 16px;
+      top: 5px;
+    }
+  }
+  @media (max-width: 900px) {
+    left: 10vw;
+    top: 21vh;
+  }
+  @media (max-width: 768px) {
+    left: 20vw;
+    top: 32vh;
+
+    .input {
+      width: 60vw;
+    }
+  }
+  @media (max-width: 322px) {
+    top: 34.5vh;
+    left: 7.5vw;
+    .input {
+      width: 85vw;
+    }
+  }
 }
 
 .search {

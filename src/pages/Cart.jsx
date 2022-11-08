@@ -6,6 +6,8 @@ import { clearCart, addItem, removeItem } from '../redux/slices/cardSlice';
 import { Link } from 'react-router-dom';
 
 import CartItems from '../components/CartItems/cartItems';
+import CartItemsEmpty from '../components/CartItems/cartItemsEmpty';
+
 const Cart = () => {
   const dispatch = useDispatch();
   const pizzas = useSelector((state) => state.cart.items);
@@ -14,8 +16,13 @@ const Cart = () => {
   console.log(pizzas);
 
   const onClickClearCart = () => {
-    dispatch(clearCart());
+    if (window.confirm('Очистить корзину?')) {
+      dispatch(clearCart());
+    }
   };
+  if (!totalPrice) {
+    return <CartItemsEmpty />;
+  }
 
   return (
     <div className='container container--cart'>

@@ -347,4 +347,17 @@ body {
   .content__items {
     display: block;
   }
+
+  @media (max-width: 620px) {
+    width: 80vw;
+    h2 {
+      font-size: 7vw;
+    }
+    p {
+      font-size: 3vw;
+    }
+    img {
+      width: 80vw;
+    }
+  }
 }

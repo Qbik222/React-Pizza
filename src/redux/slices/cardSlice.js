@@ -59,24 +59,31 @@ const cartSlice = createSlice({
     removeItem(state, action) {
       const newArr = state.items.filter(
         (item) =>
+          //ничего не подходит
           (item.size !== action.payload.size &&
             item.id !== action.payload.id &&
             item.type !== action.payload.type) ||
+          //только тип
           (item.size !== action.payload.size &&
             item.id !== action.payload.id &&
             item.type === action.payload.type) ||
+          //id и тип
           (item.size !== action.payload.size &&
             item.id === action.payload.id &&
             item.type === action.payload.type) ||
+          //размер и тип
           (item.size === action.payload.size &&
             item.id !== action.payload.id &&
             item.type === action.payload.type) ||
+          //только размер
           (item.size === action.payload.size &&
             item.id !== action.payload.id &&
             item.type !== action.payload.type) ||
+          //размер и іd
           (item.size === action.payload.size &&
             item.id === action.payload.id &&
             item.type !== action.payload.type) ||
+          //только id
           (item.size !== action.payload.size &&
             item.id === action.payload.id &&
             item.type !== action.payload.type),

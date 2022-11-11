@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 import { setCategories, setFiltres } from '../redux/slices/filterSlice';
 import { sortList } from '../components/Sort/Sort';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 
 import Sort from '../components/Sort/Sort';
 import PizzaBlock from '../components/Pizza-block/Pizza-block';
@@ -13,6 +13,7 @@ import Skeleton from '../components/Pizza-block/Skeleton';
 import Categories from '../components/Categories/Categories';
 
 const Home = ({ inputValue }) => {
+  const { items, status } = useSelector((state) => state.pizza);
   const categories = useSelector((state) => state.filter.categories);
   const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
@@ -20,24 +21,22 @@ const Home = ({ inputValue }) => {
   const isSearchRef = useRef(false);
   const isMounted = useRef(false);
 
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [items, setItems] = useState([]);
+  // const [loading, setLoading] = useState(false);
 
-  const fetchPizzas = () => {
-    setLoading(true);
-
+  const getPizzas = async () => {
     const order = sort.id.includes('-') ? 'asc' : 'desc';
     const sortBy = sort.id.replace('-', '');
     const search = inputValue ? `&search=${inputValue}` : '';
 
-    axios
-      .get(
-        `https://63625e1e66f75177ea2d7159.mockapi.io/items?${
-          categories > 0 ? `category=${categories}` : ''
-        }&sortBy=${sortBy}&order=${order}${search}`,
-      )
-      .then((res) => setItems(res.data, setLoading(false)));
-    window.scrollTo(0, 0);
+    dispatch(
+      fetchPizzas({
+        order,
+        categories,
+        sortBy,
+        search,
+      }),
+    );
   };
 
   const onClickCategory = (id) => {
@@ -58,9 +57,7 @@ const Home = ({ inputValue }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (!isSearchRef.current) {
-      fetchPizzas();
-    }
+    getPizzas();
 
     isSearchRef.current = false;
   }, [categories, sort, inputValue]);
@@ -77,19 +74,26 @@ const Home = ({ inputValue }) => {
   }, [categories, sort, inputValue]);
 
   return (
-    <div className='container'>
-      <div className='content__top'>
+    <div className="container">
+      <div className="content__top">
         <Categories value={categories} changeCategories={(i) => onClickCategory(i)} />
         <Sort />
       </div>
-      <h2 className='content__title'>Все пиццы</h2>
-      <div className='content__items'>
-        {loading
-          ? [...new Array(20)].map((_, i) => <Skeleton key={i} />)
-          : items.map((obj) => {
-              return <PizzaBlock {...obj} key={obj.id} />;
-            })}
-      </div>
+      <h2 className="content__title">Все пиццы</h2>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <h2>Произошла ошибка :С </h2>
+          <p> Не удалось получить пиццы пропробуйте позже</p>
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading'
+            ? [...new Array(20)].map((_, i) => <Skeleton key={i} />)
+            : items.map((obj) => {
+                return <PizzaBlock {...obj} key={obj.id} />;
+              })}
+        </div>
+      )}
     </div>
   );
 };

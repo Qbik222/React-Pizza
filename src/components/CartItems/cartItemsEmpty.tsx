@@ -4,17 +4,17 @@ import emptyImg from './empty-cart.png';
 
 const cartItemsEmpty = () => {
   return (
-    <div class='cart cart--empty'>
+    <div className="cart cart--empty">
       <h2>
-        Корзина пустая <icon>😕</icon>
+        Корзина пустая <span>😕</span>
       </h2>
       <p>
         Вероятней всего, вы не заказывали ещё пиццу.
         <br />
         Для того, чтобы заказать пиццу, перейди на главную страницу.
       </p>
-      <img src={emptyImg} alt='Empty cart' />
-      <Link to='/React-Pizza/' class='button button--black'>
+      <img src={emptyImg} alt="Empty cart" />
+      <Link to="/React-Pizza/" className="button button--black">
         <span>Вернуться назад</span>
       </Link>
     </div>

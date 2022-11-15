@@ -1,13 +1,18 @@
 import React from 'react';
 import './categories.scss';
 
-function Categories({ value, changeCategories }) {
+type CategoriesProps = {
+  value: number;
+  changeCategories: (i: number) => void;
+};
+
+const Categories: React.FC<CategoriesProps> = ({ value, changeCategories }) => {
   const categoties = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
   return (
-    <div className='categories'>
+    <div className="categories">
       <ul>
-        {categoties.map((item, i) => {
+        {categoties.map((item: string, i: number) => {
           return (
             <li
               key={item}
@@ -20,6 +25,6 @@ function Categories({ value, changeCategories }) {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;

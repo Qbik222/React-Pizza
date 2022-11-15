@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
 import './sort.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeSort } from '../../redux/slices/filterSlice';
+import { changeSort, FilterSort, SortPropertyEnum } from '../../redux/slices/filterSlice';
+import { RootState } from '../../redux/store';
 
-export const sortList = [
-  { name: 'популярности(убыванию)', id: 'rating' },
-  { name: 'популярности(возрастанию)', id: '-rating' },
-  { name: 'цене (убыванию)', id: 'price' },
-  { name: 'цене(возрастанию)', id: '-price' },
-  { name: 'алфавиту (убыванию)', id: 'title' },
-  { name: 'алфавиту(возрастанию)', id: '-title' },
+type SortItem = {
+  name: string;
+  id: SortPropertyEnum;
+};
+
+export const sortList: SortItem[] = [
+  { name: 'популярности(убыванию)', id: SortPropertyEnum.RATING_DESC },
+  { name: 'популярности(возрастанию)', id: SortPropertyEnum.RATING_ASC },
+  { name: 'цене (убыванию)', id: SortPropertyEnum.PRICE_DESC },
+  { name: 'цене(возрастанию)', id: SortPropertyEnum.PRICE_ASC },
+  { name: 'алфавиту (убыванию)', id: SortPropertyEnum.TITLE_DESC },
+  { name: 'алфавиту(возрастанию)', id: SortPropertyEnum.TITLE_ASC },
 ];
 
 function Sort() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector((state: RootState) => state.filter.sort);
   const dispatch = useDispatch();
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
-  const sortName = sort.name;
+  const sortName: string = sort.name;
 
   React.useEffect(() => {
-    const onClosePopup = (e) => {
+    const onClosePopup = (e: any) => {
       if (!e.composedPath().includes(sortRef.current)) {
         setIsVisible(false);
       }
@@ -32,7 +38,7 @@ function Sort() {
     return () => document.body.removeEventListener('click', onClosePopup);
   }, []);
 
-  const VisiblePopup = (i) => {
+  const VisiblePopup = (i: FilterSort) => {
     dispatch(changeSort(i));
     setIsVisible(false);
   };
@@ -62,7 +68,7 @@ function Sort() {
                 <li
                   onClick={() => VisiblePopup(item)}
                   key={i}
-                  className={sort.id === item.id ? 'active' : null}>
+                  className={sort.id === item.id ? 'active' : undefined}>
                   {item.name}
                 </li>
               );

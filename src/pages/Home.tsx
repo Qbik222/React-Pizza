@@ -3,20 +3,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
-import { setCategories, setFiltres } from '../redux/slices/filterSlice';
+import {
+  FilterSliceState,
+  setCategories,
+  setFiltres,
+  FilterSort,
+} from '../redux/slices/filterSlice';
 import { sortList } from '../components/Sort/Sort';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, SearchPizzaParams } from '../redux/slices/pizzaSlice';
 
 import Sort from '../components/Sort/Sort';
 import PizzaBlock from '../components/Pizza-block/Pizza-block';
 import Skeleton from '../components/Pizza-block/Skeleton';
 import Categories from '../components/Categories/Categories';
+import { RootState, useAppDispatch } from '../redux/store';
 
-const Home = ({ inputValue }) => {
-  const { items, status } = useSelector((state) => state.pizza);
-  const categories = useSelector((state) => state.filter.categories);
-  const sort = useSelector((state) => state.filter.sort);
-  const dispatch = useDispatch();
+type HomeProps = {
+  inputValue: string;
+};
+
+const Home: React.FC<HomeProps> = ({ inputValue }) => {
+  const { items, status } = useSelector((state: RootState) => state.pizza);
+  const categories = useSelector((state: RootState) => state.filter.categories);
+  const sort = useSelector((state: RootState) => state.filter.sort);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearchRef = useRef(false);
   const isMounted = useRef(false);
@@ -32,26 +42,35 @@ const Home = ({ inputValue }) => {
     dispatch(
       fetchPizzas({
         order,
-        categories,
+        categories: String(categories),
         sortBy,
         search,
       }),
     );
   };
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id: number) => {
     dispatch(setCategories(id));
   };
 
   useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+      const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
 
-      const sort = sortList.find((obj) => obj.id === params.sortProperty);
+      const sort = sortList.find((obj) => obj.id === params.sortBy);
 
-      dispatch(setFiltres({ ...params, sort }));
-      isSearchRef.current = true;
+      // if (sort) {
+      //   params.sortBy = sort
+
+      // }
+      dispatch(
+        setFiltres({
+          categories: Number(params.categories),
+          sort: sort || sortList[0],
+        }),
+      );
     }
+    isSearchRef.current = true;
   }, []);
 
   useEffect(() => {
@@ -89,7 +108,7 @@ const Home = ({ inputValue }) => {
         <div className="content__items">
           {status === 'loading'
             ? [...new Array(20)].map((_, i) => <Skeleton key={i} />)
-            : items.map((obj) => {
+            : items.map((obj: any) => {
                 return <PizzaBlock {...obj} key={obj.id} />;
               })}
         </div>

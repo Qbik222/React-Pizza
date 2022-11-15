@@ -9,14 +9,21 @@ import Search from '../Search';
 import logoSvg from '../../assets/img/pizza-logo.svg';
 import { Link, useLocation } from 'react-router-dom';
 
-function Header({ inputValue, setInputValue }) {
-  const totalPrice = useSelector((state) => state.cart.totalPrice);
-  const pizzas = useSelector((state) => state.cart.items);
+type HeaderProps = {
+  inputValue: string;
+  setInputValue: (value: string) => void;
+};
+
+const Header: React.FC<HeaderProps> = ({ inputValue, setInputValue }) => {
+  const totalPrice = useSelector((state: any) => state.cart.totalPrice);
+  const pizzas = useSelector((state: any) => state.cart.items);
 
   const location = useLocation();
 
   const currentCount =
-    pizzas.length > 0 ? pizzas.map((item) => item.count).reduce((prev, next) => prev + next) : 0;
+    pizzas.length > 0
+      ? pizzas.map((item: any) => item.count).reduce((prev: number, next: number) => prev + next)
+      : 0;
 
   return (
     <div className="header">
@@ -32,8 +39,7 @@ function Header({ inputValue, setInputValue }) {
         </Link>
         {location.pathname !== '/cart' ? (
           <Search
-            inputValue={inputValue}
-            setInputValue={(i) => {
+            setInputValue={(i: string) => {
               setInputValue(i);
             }}
           />
@@ -76,6 +82,6 @@ function Header({ inputValue, setInputValue }) {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

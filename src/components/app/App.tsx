@@ -9,7 +9,7 @@ import NotFound from '../../pages/Not-found';
 import './app.scss';
 
 function App() {
-  const [inputValue, setInputValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState<string>('');
 
   return (
     <div className="wrapper">

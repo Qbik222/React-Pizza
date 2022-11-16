@@ -31,9 +31,6 @@ const Home: React.FC<HomeProps> = ({ inputValue }) => {
   const isSearchRef = useRef(false);
   const isMounted = useRef(false);
 
-  // const [items, setItems] = useState([]);
-  // const [loading, setLoading] = useState(false);
-
   const getPizzas = async () => {
     const order = sort.id.includes('-') ? 'asc' : 'desc';
     const sortBy = sort.id.replace('-', '');
@@ -59,10 +56,6 @@ const Home: React.FC<HomeProps> = ({ inputValue }) => {
 
       const sort = sortList.find((obj) => obj.id === params.sortBy);
 
-      // if (sort) {
-      //   params.sortBy = sort
-
-      // }
       dispatch(
         setFiltres({
           categories: Number(params.categories),

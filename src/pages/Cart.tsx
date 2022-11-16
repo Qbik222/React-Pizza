@@ -14,7 +14,7 @@ const Cart: React.FC = () => {
   const pizzas = useSelector((state: RootState) => state.cart.items);
   const totalPrice = useSelector((state: RootState) => state.cart.totalPrice);
 
-  console.log(pizzas);
+  // console.log(pizzas);
 
   const onClickClearCart = () => {
     if (window.confirm('Очистить корзину?')) {

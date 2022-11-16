@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 // import { setItem, removeItem,} from '../../redux/slices/cardSlice';
@@ -17,8 +17,16 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ inputValue, setInputValue }) => {
   const totalPrice = useSelector((state: any) => state.cart.totalPrice);
   const pizzas = useSelector((state: any) => state.cart.items);
-
+  const isMounted = useRef(false);
   const location = useLocation();
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(pizzas);
+      localStorage.setItem('cart', json);
+    }
+    isMounted.current = true;
+  }, [pizzas]);
 
   const currentCount =
     pizzas.length > 0
